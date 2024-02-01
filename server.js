@@ -3,15 +3,19 @@ const mongoose = require("mongoose");
 const axios = require("axios");
 const path = require("path");
 const app = express();
+const env = require('dotenv').config()
 
 app.set("view engine", "ejs");
 // Set the views directory
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
-const port = 5050;
+const port = process.env.PORT;
 
 // Connect to MongoDB (replace 'mongodb://localhost:27017/yourDatabase' with your MongoDB connection string)
-mongoose.connect("mongodb://localhost:27017/cryptoData");
+const url = process.env.MONGO_URL
+mongoose.connect(url)
+.then(()=>{console.log("db connected")})
+.catch((e)=>{console.log("error",e)});
 
 // Define a MongoDB schema for storing crypto data
 const cryptoSchema = new mongoose.Schema({
@@ -104,6 +108,8 @@ setInterval(fetchAndUpdateData, 60000);
 // Set up interval to fetch and store data every minute
 
 // Initial fetch and store (optional, depending on your use case)
+
+
 
 app.get("/hodelinfo/:name", async (req, res) => {
   let { name } = req.params;
