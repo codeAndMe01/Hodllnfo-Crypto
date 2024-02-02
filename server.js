@@ -109,7 +109,9 @@ setInterval(fetchAndUpdateData, 60000);
 
 // Initial fetch and store (optional, depending on your use case)
 
-
+app.get('/',(req,res)=>{
+  res.render('home')
+})
 
 app.get("/hodelinfo/:name", async (req, res) => {
   let { name } = req.params;
